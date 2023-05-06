@@ -30,7 +30,7 @@ The following behavior has been verified for the included test files [tests/test
 - Detects exceptions manually raised by functions (```raise Exception```).
 - Detects exceptions raised by calling functions outside try-except blocks.
 - Detects exceptions raised by using operators like indexing ```arr[index]``` and dividing ```a / b or a // b```.
-- Excludes exceptions caught in ```except Exception:``` clauses from the report and understands the [Exception Hierarchy](https://docs.python.org/3/library/exceptions.html#exception-hierarchy) for built-in exceptions.
+- Excludes exceptions caught in ```except Exception:``` clauses from the report and understands the [Exception Hierarchy](https://docs.python.org/3/library/exceptions.html#exception-hierarchy).
 - Excludes exceptions documented in [function docstrings](https://peps.python.org/pep-0257/) from the report.
 
 ## Untested behavior
