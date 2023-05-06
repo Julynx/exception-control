@@ -2,9 +2,11 @@
 *Performs limited static analysis for uncaught exceptions in a Python file.*
 
 This is a ⚠️WIP⚠️. Check out 
-[limitations](https://github.com/Julynx/exception-control/edit/main/README.md#limitations) 
+[tested behavior](https://github.com/Julynx/exception-control/edit/main/README.md#tested-behavior),
+[untested behavior](https://github.com/Julynx/exception-control/edit/main/README.md#untested-behavior)
 and 
-[untested behavior](https://github.com/Julynx/exception-control/edit/main/README.md#untested-behavior).
+[limitations](https://github.com/Julynx/exception-control/edit/main/README.md#limitations).
+
 
 <br>
 <br>
@@ -14,7 +16,7 @@ and
 <br>
 
 ## Usage
-To check for uncaught exceptions in a python file:
+To check for uncaught exceptions in a Python file:
 ```
 python3 main.py [filename]
 ```
@@ -46,10 +48,10 @@ The following behavior has been verified for the included test files ```tests/te
 - Does not work well with classes or custom exceptions:
   - There can be many classes in a single document with methods in different classes sharing the same name.
   - There are many ways to instantiate a class and call its methods.
-  - It is, in some cases, impossible to determine the class of a variable and the function being called using static analysis.
+  - It is, in some cases, impossible to determine the class of a variable and the function called using static analysis.
 - Does not support external libraries:
   - External libraries are unsupported, but the code is extensible enough to make it possible to include them in the future.
 - Support for multiple files is limited:
   - Support for multiple files is done through [Bash Process Substitution](https://tldp.org/LDP/abs/html/process-sub.html). ```python3 main.py <(cat [file1] [file2]...)```
-  - Line numbers will be relative to the merged files and not per-file.
+  - Line numbers will be relative to the merged files and not per file.
   - Functions are searched by name, so renamed functions ```from <module> import <function> as <new_name>``` will not be detected.
