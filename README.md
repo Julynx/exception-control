@@ -47,7 +47,7 @@ The following behavior has been verified for the included test files [tests/test
   - Due to Python being a dynamic language with duck typing, there are many exceptions that cannot be detected statically.
   - The exceptions raised by most popular functions are undocumented and therefore not visible from the outside.
   - Exceptions are stored by name. If there are multiple ```TypeError``` in a function, only the last one will be reported.
-- Will report all exceptions even if they will never be raised in execution:
+- Will report exceptions even if they will never be raised in execution:
   - Due to it being a static analysis tool, it does not follow a variable along the code or determine its possible values.
   - That is why, exceptions will be reported for any indexing or division operations regardless if they are "safe" or not.
 - Does not work well with classes or custom exceptions:
