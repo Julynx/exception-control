@@ -26,7 +26,7 @@ python3 main.py <(cat [file1] [file2]...)
 ```
 
 ## Tested behavior
-The following behavior has been verified for the included test files ```tests/test.py``` and ```tests/test2.py```:
+The following behavior has been verified for the included test files [tests/test.py](https://github.com/Julynx/exception-control/blob/main/tests/test.py) and [tests/test2.py](https://github.com/Julynx/exception-control/blob/main/tests/test2.py):
 - Detects exceptions manually raised by functions (```raise Exception```).
 - Detects exceptions raised by calling functions outside try-except blocks.
 - Detects exceptions raised by using operators like indexing ```arr[index]``` and dividing ```a / b or a // b```.
