@@ -35,7 +35,7 @@ The following behavior has been verified for the included test files ```tests/te
 
 ## Untested behavior
 - May fail with nested try/except blocks.
-- More extensive testing needs to be done to detect additional [limitations](https://github.com/Julynx/exception-control/edit/main/README.md#limitations).
+- More extensive testing needs to be done to detect additional [limitations](#limitations).
 
 ## Limitations
 - Will miss a lot of exceptions:
