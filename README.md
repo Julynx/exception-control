@@ -25,6 +25,7 @@ Multiple files support is limited, but you can try this:
 python3 main.py <(cat [file1] [file2]...)
 ```
 <br>
+
 ## Tested behavior
 The following behavior has been verified for the included test files [tests/test.py](https://github.com/Julynx/exception-control/blob/main/tests/test.py) and [tests/test2.py](https://github.com/Julynx/exception-control/blob/main/tests/test2.py):
 - Detects exceptions manually raised by functions (```raise Exception```).
@@ -36,7 +37,9 @@ The following behavior has been verified for the included test files [tests/test
 ## Untested behavior
 - May fail with nested try/except blocks.
 - More extensive testing needs to be done to detect additional [limitations](#limitations).
+
 <br>
+
 ## Limitations
 - Will miss a lot of exceptions:
   - Due to Python being a dynamic language with duck typing, there are many exceptions that cannot be detected statically.
