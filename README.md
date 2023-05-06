@@ -2,10 +2,10 @@
 *Performs limited static analysis for uncaught exceptions in a Python file.*
 
 This is a ⚠️WIP⚠️. Check out 
-[tested behavior](https://github.com/Julynx/exception-control/edit/main/README.md#tested-behavior),
-[untested behavior](https://github.com/Julynx/exception-control/edit/main/README.md#untested-behavior)
+[tested behavior](#tested-behavior),
+[untested behavior](#untested-behavior)
 and 
-[limitations](https://github.com/Julynx/exception-control/edit/main/README.md#limitations).
+[limitations](#limitations).
 
 
 <br>
