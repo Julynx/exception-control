@@ -1,5 +1,5 @@
 # exception-control
-*Performs limited static analysis for uncaught exceptions in a Python file.*
+*Perform limited static analysis for uncaught exceptions in a Python file.*
 
 This is a ⚠️WIP⚠️. Check out 
 [tested behavior](#tested-behavior),
