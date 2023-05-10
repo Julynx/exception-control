@@ -12,8 +12,6 @@ def function0():
 def function1(*, arg1: int, arg2: int) -> int:
     arg1 += 3
 
-    if arg1 > 20:
-        raise ValueError("arg1 is greater than 20")
     if arg1 > 40:
         raise Exception
     return 20 + arg2
@@ -40,6 +38,7 @@ def main() -> int:
     print("Hello world")
 
     f = open("filename", "w")
+    int("a")
     
     print("Hello world")
 
@@ -47,10 +46,13 @@ def main() -> int:
     a = 3
     b = 0
     c = a / b
+    
     try:
         c = l[10]
     except IndexError:
-        print("IndexError")
+        print("b")
+    except ValueError:
+        print("a")
 
     try:
         function0()

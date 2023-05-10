@@ -4,18 +4,21 @@
 @author   Julio Cabria
 """
 
-from database import BUILTIN_FUNCTIONS
+import re
 
 
 def function_excs(line):
 
     excs = []
 
-    for func_call, func_excs in BUILTIN_FUNCTIONS.items():
+    if re.search(r'[(\s]open\(', line):
+        excs.append("FileNotFoundError")
+        excs.append("PermissionError")
 
-        if func_call not in line:
-            continue
+    if re.search(r'[(\s]int\(', line):
+        excs.append("ValueError")
 
-        excs.extend(func_excs)
+    if re.search(r'[(\s]float\(', line):
+        excs.append("ValueError")
 
     return excs

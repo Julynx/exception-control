@@ -7,13 +7,13 @@
 import re
 
 
-# Using the match statement with regex patterns
 def operator_excs(line):
 
     excs = []
 
     if re.search(r'//?', line):
         excs.append("ZeroDivisionError")
+
     if re.search(r'\b\w+\[', line):
         excs.append("IndexError")
 

@@ -94,25 +94,28 @@ def raised_exceptions(text, fun_dict=None):
             continue
 
         # Implicit exceptions (python built-in functions)
-        excs.update({exc: line_idx
-                     for exc
-                     in function_excs(line)})
+        builtin_func_excs = {exc: line_idx
+                             for exc
+                             in function_excs(line)}
+        excs.update(builtin_func_excs)
 
         # Implicit exceptions (python built-in operators
-        excs.update({exc: line_idx
-                     for exc
-                     in operator_excs(line)})
+        builtin_oper_excs = {exc: line_idx
+                             for exc
+                             in operator_excs(line)}
+        excs.update(builtin_oper_excs)
 
         # Implicit exceptions (user-defined functions)
-        excs.update({exc: line_idx
-                     for funct_call
-                     in (fun_excs
-                         for fun_name, fun_excs
-                         in fun_dict.items()
-                         if f"{fun_name}(" in line
-                         and f"def {fun_name}" not in line)
-                     for exc, _
-                     in funct_call})
+        implicit_fun_excs = {exc: line_idx
+                             for funct_call
+                             in (fun_excs
+                                 for fun_name, fun_excs
+                                 in fun_dict.items()
+                                 if f"{fun_name}(" in line
+                                 and f"def {fun_name}" not in line)
+                             for exc, _
+                             in funct_call}
+        excs.update(implicit_fun_excs)
 
         # Explicit exceptions (manually raised)
         try:
