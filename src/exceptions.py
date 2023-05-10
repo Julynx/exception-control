@@ -11,6 +11,7 @@ from string_utils import get_doctring
 from database import expand_groups
 from database import exception_list
 from operators import operator_excs
+from functions import function_excs
 
 
 def filter_out_documented(excs_for_fun, docstring):
@@ -92,6 +93,11 @@ def raised_exceptions(text, fun_dict=None):
         if line.lstrip().startswith("#"):
             continue
 
+        # Implicit exceptions (python built-in functions)
+        excs.update({exc: line_idx
+                     for exc
+                     in function_excs(line)})
+
         # Implicit exceptions (python built-in operators
         excs.update({exc: line_idx
                      for exc
@@ -108,7 +114,7 @@ def raised_exceptions(text, fun_dict=None):
                      for exc, _
                      in funct_call})
 
-        # Explicit exceptions
+        # Explicit exceptions (manually raised)
         try:
             exception = grab(line, start="raise ", end="\n").strip()
         except IndexError:

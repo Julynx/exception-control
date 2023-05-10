@@ -22,7 +22,7 @@ def main():
     table = {}
 
     function_exception_table(filename, table)
-    print(table_str(table))
+    print(table_str(filename, table))
 
 
 if __name__ == "__main__":

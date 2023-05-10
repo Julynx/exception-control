@@ -38,6 +38,9 @@ def main() -> int:
 
     print("Hello world")
     print("Hello world")
+
+    f = open("filename", "w")
+    
     print("Hello world")
 
     l = [1, 2, 3, 4, 5]

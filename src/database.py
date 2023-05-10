@@ -4,6 +4,12 @@
 @author   Julio Cabria
 """
 
+BUILTIN_FUNCTIONS = {
+    'open(': ['FileNotFoundError', 'PermissionError'],
+    'int(': ['ValueError'],
+    'float(': ['ValueError'],
+}
+
 EXCEPTION_GROUPS = {
     'BaseExceptionGroup': 'BaseException',
     'GeneratorExit': 'BaseException',
