@@ -5,6 +5,7 @@
 """
 
 from colorama import Fore, Back, Style
+import re
 
 
 def green(text):
@@ -23,10 +24,16 @@ def grey_bkg(text):
     return f"{Back.LIGHTBLACK_EX}{text}{Style.RESET_ALL}"
 
 
-def print_yellow(*args, **kwargs):
-    print(Fore.YELLOW, end="")
-    print(*args, **kwargs)
-    print(Style.RESET_ALL, end="")
+def remove_string_literals(text):
+
+    pattern = r'(\'[^\']*\'|\"[^\"]*\")'
+    text = re.sub(pattern, '', text)
+
+    triple_quote_index = text.find('"""')
+    if triple_quote_index == -1:
+        return text
+
+    return text[:triple_quote_index]
 
 
 def to_dict_inverted(list_of_tuples):

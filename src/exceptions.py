@@ -8,6 +8,7 @@ from code_parsing import Functions
 from code_parsing import TryExceptBlocks
 from string_utils import grab
 from string_utils import get_doctring
+from string_utils import remove_string_literals
 from database import expand_groups
 from database import exception_list
 from operators import operator_excs
@@ -88,45 +89,40 @@ def raised_exceptions(text, fun_dict=None):
 
     for line_idx, line in enumerate(text.split("\n")):
 
-        line += "\n"
-
         if line.lstrip().startswith("#"):
             continue
 
+        line = f"{line}\n"
+        clean_line = remove_string_literals(line)
+
         # Implicit exceptions (python built-in functions)
-        builtin_func_excs = {exc: line_idx
-                             for exc
-                             in function_excs(line)}
-        excs.update(builtin_func_excs)
+        excs.update({exc: line_idx
+                     for exc
+                     in function_excs(clean_line)})
 
         # Implicit exceptions (python built-in operators
-        builtin_oper_excs = {exc: line_idx
-                             for exc
-                             in operator_excs(line)}
-        excs.update(builtin_oper_excs)
+        excs.update({exc: line_idx
+                     for exc
+                     in operator_excs(clean_line)})
 
         # Implicit exceptions (user-defined functions)
-        implicit_fun_excs = {exc: line_idx
-                             for funct_call
-                             in (fun_excs
-                                 for fun_name, fun_excs
-                                 in fun_dict.items()
-                                 if f"{fun_name}(" in line
-                                 and f"def {fun_name}" not in line)
-                             for exc, _
-                             in funct_call}
-        excs.update(implicit_fun_excs)
+        excs.update({exc: line_idx
+                     for funct_call
+                     in (fun_excs
+                         for fun_name, fun_excs
+                         in fun_dict.items()
+                         if f"{fun_name}(" in clean_line
+                         and f"def {fun_name}" not in clean_line)
+                     for exc, _
+                     in funct_call})
 
         # Explicit exceptions (manually raised)
         try:
-            exception = grab(line, start="raise ", end="\n").strip()
+            exception = grab(clean_line, start="raise ", end="\n").strip()
         except IndexError:
             continue
 
         exception_name = exception.split("(", maxsplit=1)[0]
-        if "\"" in exception_name or "'" in exception_name:
-            continue
-
         exception_name = exception_name.split("#", maxsplit=1)[0]
         excs[exception_name] = line_idx
 
