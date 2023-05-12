@@ -17,7 +17,7 @@ def main():
         filename = sys.argv[1]
 
     except IndexError:
-        print("Usage: python3 main.py <filename>")
+        print("\nUsage: python3 main.py <filename>\n")
         sys.exit(1)
 
     try:
