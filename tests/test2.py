@@ -1,6 +1,14 @@
 import sys
 
 
+def test_fun():
+    """
+    Raises:
+        : Thi
+    """
+    raise ValueError
+
+
 def main() -> int:  # fun_idx = 3
     """
     Main function
@@ -10,10 +18,7 @@ def main() -> int:  # fun_idx = 3
     print("Hello world")
     print("Hello world")
 
-    try:  # try_idx = 9
-        raise ValueError  # exc_idx = 1
-    except Exception:
-        pass
+    test_fun()
 
     print("Hello world")
     print("Hello world")

@@ -19,10 +19,8 @@ def main():
         print("Usage: python3 main.py <filename>")
         sys.exit(1)
 
-    table = {}
-
-    function_exception_table(filename, table)
-    print(table_str(filename, table))
+    table, documented = function_exception_table(filename)
+    print(table_str(filename, table, documented))
 
 
 if __name__ == "__main__":

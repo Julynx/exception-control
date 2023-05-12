@@ -15,31 +15,24 @@ from operators import operator_excs
 from functions import function_excs
 
 
-def filter_out_documented(excs_for_fun, docstring):
+def documented_exceptions(docstring):
     """
-    Returns the exceptions not documented in the docstring.
+    Returns the exceptions documented in the docstring.
 
     Args:
-        excs_for_fun (dict): Exceptions raised in the text of a function.
-                                dict[exception_name]=line_idx
-                             The line is relative to the function body and
-                             not to the whole file.
         docstring (str):     Docstring of the function.
 
     Returns:
-        dict:   Exceptions not documented in the docstring in the same format
-                as excs_for_fun.
+        list:   Exceptions documented in the docstring, expanded to
+                include the exceptions in the groups they belong to.
     """
     if docstring is None:
-        return excs_for_fun
+        return set()
 
-    return {exc: line_idx
-            for exc, line_idx
-            in excs_for_fun.items()
-            if exc not in expand_groups({exc
-                                         for exc
-                                         in exception_list()
-                                         if exc in docstring})}
+    return expand_groups({exc
+                          for exc
+                          in exception_list()
+                          if exc in docstring})
 
 
 def not_handled(raised, caught):
@@ -160,7 +153,7 @@ def caught_exceptions(text):
     return excs
 
 
-def function_exception_table(filename, fun_dict):
+def function_exception_table(filename):
 
     def _search_outside(fun_idx,
                         fun_body,
@@ -202,28 +195,30 @@ def function_exception_table(filename, fun_dict):
 
 # def function_exception_table(filename, fun_dict):
 
+    fun_dict = {}
+    documented_dict = {}
+
     for fun_idx, fun_name, fun_body in Functions(filename):
 
+        # Undocumented exceptions
         excs_for_fun = {}
 
-        # Excetions raised inside try-except blocks
         try_except_boundaries, inside_excs = _search_inside(fun_idx,
                                                             fun_body,
                                                             fun_dict)
         excs_for_fun.update(inside_excs)
 
-        # Exceptions raised outside try-except blocks
         outside_excs = _search_outside(fun_idx,
                                        fun_body,
                                        fun_dict,
                                        try_except_boundaries)
         excs_for_fun.update(outside_excs)
 
-        # Filter out exceptions documented in the docstring of the function
-        excs_for_fun = filter_out_documented(excs_for_fun,
-                                             get_doctring(fun_body))
-
         fun_dict[fun_name] = sorted(excs_for_fun.items(),
                                     key=lambda x: x[1])
 
-    return 0
+        # Documented exceptions
+        docstring_text = get_doctring(fun_body)
+        documented_dict[fun_name] = documented_exceptions(docstring_text)
+
+    return fun_dict, documented_dict

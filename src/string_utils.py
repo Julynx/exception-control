@@ -63,10 +63,14 @@ def get_doctring(text):
         return None
 
 
-def table_str(filename, fun_table):
+def table_str(filename, fun_table, documented_table):
 
-    with open(filename, 'r') as file:
-        lines = file.readlines()
+    try:
+        with open(filename, 'r') as file:
+            lines = file.readlines()
+
+    except OSError:
+        return f"\nError: File '{filename}' not found.\n"
 
     if all(not value for value in fun_table.values()):
         return "\n---- No uncaught exceptions ----\n"
@@ -74,12 +78,17 @@ def table_str(filename, fun_table):
     text = ""
     for fun_name, fun_excs in fun_table.items():
 
+        fun_excs = {exc_line: exc_name
+                    for exc_line, exc_name
+                    in to_dict_inverted(fun_excs).items()
+                    if exc_name not in documented_table[fun_name]}
+
         if not fun_excs:
             continue
 
         text += f"\n{green(fun_name)}\n"
 
-        for exc_line, exc_name in to_dict_inverted(fun_excs).items():
+        for exc_line, exc_name in fun_excs.items():
             text += " "*2 + f"{yellow(exc_name)}\n"
             file_line = shortened(lines[exc_line-1].strip())
             line_number = " "*2 + grey_bkg(str(exc_line).rjust(4))
