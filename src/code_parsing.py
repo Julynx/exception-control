@@ -11,7 +11,7 @@ from string_utils import index_in_list
 from string_utils import first_nonempty_line
 
 
-def cut_function_body(text_lines):
+def cut_function_body(text_lines, try_except_block=False):
     """
     Receives a list of text lines of a function with a given indentation.
     It detects the end of the function body by looking for the first line
@@ -28,10 +28,24 @@ def cut_function_body(text_lines):
 
     for line in text_lines:
 
-        if (line.strip()
-            and line_indentation(line) < indentation
-                and not line.strip().startswith("except")):
-            break
+        # Comments are included to avoid messing up line numbers.
+        # In case the comment is unindentated, it is added to the body
+        # indentated to avoid future problems.
+        if line.lstrip().startswith("#"):
+            f_body.append(line_indentation(line)*" " + line.strip())
+            continue
+
+        # Nonempty line that drops below the indentation level.
+        if line.strip() and line_indentation(line) < indentation:
+
+            # If that happens outside of a try-except block, the function ends.
+            if not try_except_block:
+                break
+
+            # In try-except blocks, except: is allowed to be at a lower
+            # indentation level than the contents of the try block itself.
+            if not line.strip().startswith("except"):
+                break
 
         f_body.append(line.rstrip())
 
@@ -105,7 +119,8 @@ class TryExceptBlocks:
 
             first_idx = index_in_list("try:", text_lines) + 1
 
-            body = cut_function_body(text_lines[first_idx:])
+            body = cut_function_body(text_lines[first_idx:],
+                                     try_except_block=True)
 
             processed_lines = first_idx + len(body)
 

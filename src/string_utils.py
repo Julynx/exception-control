@@ -175,7 +175,8 @@ def first_nonempty_line(text_lines, start=0):
         return next(line
                     for line
                     in text_lines[start:]
-                    if line.strip())
+                    if line.strip()
+                    and not line.lstrip().startswith("#"))
 
     except StopIteration:
         raise IndexError("No nonempty lines found.")
