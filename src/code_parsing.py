@@ -1,6 +1,6 @@
 """
 @file     code_parsing.py
-@date     06/05/2023
+@date     12/05/2023
 @author   Julio Cabria
 """
 
@@ -58,8 +58,30 @@ class Functions:
     from_idx = 0
 
     def __init__(self, filename):
-        with open(filename, "r") as file:
-            self.text_lines = file.readlines()
+        """
+        Initializes the Functions object.
+
+        Args:
+            filename (str): Name of the file to parse.
+
+        Raises:
+            OSError: If the file cannot be opened or read.
+        """
+        try:
+            with open(filename, "r") as file:
+                self.text_lines = file.readlines()
+
+        except FileNotFoundError:
+            raise FileNotFoundError(f"File '{filename}' not found.")
+
+        except PermissionError:
+            raise PermissionError(f"Permission denied to open '{filename}'.")
+
+        except UnicodeDecodeError:
+            raise UnicodeDecodeError(f"File '{filename}' is not a text file.")
+
+        except OSError as os_err:
+            raise OSError(f"Error opening file '{filename}': {os_err}")
 
     def __iter__(self):
         return self

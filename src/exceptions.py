@@ -1,6 +1,6 @@
 """
 @file     exceptions.py
-@date     06/05/2023
+@date     12/05/2023
 @author   Julio Cabria
 """
 
@@ -154,7 +154,20 @@ def caught_exceptions(text):
 
 
 def function_exception_table(filename):
+    """
+    Returns a table of functions and the exceptions they raise.
 
+    Args:
+        filename (str): Path to the file.
+
+    Returns:
+        tuple:  (fun_dict, documented_dict)
+                fun_dict[fun_name] = {exception_name: line_idx, ...}
+                documented_dict[fun_name] = {exception_name, ...}
+
+    Raises:
+        OSError: If the file cannot be opened for any reason.
+    """
     def _search_outside(fun_idx,
                         fun_body,
                         fun_dict,
