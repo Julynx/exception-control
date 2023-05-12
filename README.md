@@ -11,7 +11,7 @@ and
 <br>
 <br>
 <p align="center">  
-  <img width="600" src="https://i.imgur.com/KHNHDqm.png">
+  <img width="600" src="https://i.imgur.com/nkAqXCp.png">
 </p>
 <br>
 
