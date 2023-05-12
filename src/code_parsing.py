@@ -135,7 +135,10 @@ class TryExceptBlocks:
         return self
 
     def __next__(self):
-
+        """
+        Raises:
+            StopIteration: If the end of the file is reached.
+        """
         try:
             text_lines = self.text_lines[self.from_idx:]
 

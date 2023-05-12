@@ -72,9 +72,7 @@ def table_str(filename, fun_table, documented_table):
     except OSError:
         return f"\nError: File '{filename}' not found.\n"
 
-    if all(not value for value in fun_table.values()):
-        return "\n---- No uncaught exceptions ----\n"
-
+    printed = False
     text = ""
     for fun_name, fun_excs in fun_table.items():
 
@@ -90,13 +88,14 @@ def table_str(filename, fun_table, documented_table):
 
         for exc_line, exc_name in fun_excs.items():
             text += " "*2 + f"{yellow(exc_name)}\n"
-            
+
             try:
                 file_line = shortened(lines[exc_line-1].strip())
-            
+
             except IndexError:
                 file_line = "Could not load line preview."
-            
+
+            printed = True
             line_number = " "*2 + grey_bkg(str(exc_line).rjust(4))
             text += f"{line_number}  {file_line}\n"
 
@@ -106,6 +105,9 @@ To remove an exception from the report, enclose
 the code inside a try/except block or add the
 exception name to the function's docstring.
 """)
+
+    if not printed:
+        text = "\n---- No uncaught exceptions ----\n"
 
     return text
 
