@@ -4,8 +4,8 @@
 @author   Julio Cabria
 """
 
-from colorama import Fore, Back, Style
 import re
+from colorama import Fore, Back, Style
 
 
 def green(text):
@@ -18,6 +18,10 @@ def red(text):
 
 def yellow(text):
     return f"{Fore.YELLOW}{text}{Style.RESET_ALL}"
+
+
+def cyan(text):
+    return f"{Fore.CYAN}{text}{Style.RESET_ALL}"
 
 
 def grey_bkg(text):
@@ -80,6 +84,13 @@ def table_str(filename, fun_table):
             file_line = shortened(lines[exc_line-1].strip())
             line_number = " "*2 + grey_bkg(str(exc_line).rjust(4))
             text += f"{line_number}  {file_line}\n"
+
+    text += \
+        cyan("""
+To remove an exception from the report, enclose
+the code inside a try/except block or add the
+exception name to the function's docstring.
+""")
 
     return text
 
