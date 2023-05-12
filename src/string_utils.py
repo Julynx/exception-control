@@ -90,7 +90,13 @@ def table_str(filename, fun_table, documented_table):
 
         for exc_line, exc_name in fun_excs.items():
             text += " "*2 + f"{yellow(exc_name)}\n"
-            file_line = shortened(lines[exc_line-1].strip())
+            
+            try:
+                file_line = shortened(lines[exc_line-1].strip())
+            
+            except IndexError:
+                file_line = "Could not load line preview."
+            
             line_number = " "*2 + grey_bkg(str(exc_line).rjust(4))
             text += f"{line_number}  {file_line}\n"
 
