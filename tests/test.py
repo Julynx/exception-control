@@ -11,14 +11,12 @@ def function0():
 
 def function1(*, arg1: int, arg2: int) -> int:
     arg1 += 3
-
     if arg1 > 40:
         raise Exception
     return 20 + arg2
 
 
 def function2(*, arg1: int, arg2: int) -> int:
-
     try:
         res = arg1 / arg2
         raise ZeroDivisionError
@@ -35,18 +33,17 @@ def main() -> int:
     """
 
     print("Hello world")
-    print("Hello world")
 
     f = open("filename", "w")
     int("a")
-    
+
     print("Hello world")
 
     l = [1, 2, 3, 4, 5]
     a = 3
     b = 0
     c = a / b
-    
+
     try:
         c = l[10]
     except IndexError:
@@ -60,7 +57,6 @@ def main() -> int:
         pass
 
     function1(arg1=1, arg2=2)
-    raise Exception("This is an exception")
 
 
 if __name__ == "__main__":
